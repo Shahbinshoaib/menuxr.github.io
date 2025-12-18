@@ -22,6 +22,12 @@
     <p>Scan the image</p>
   </div>
 
+  <div class="ui">
+  <button onclick="showDish('burger')">Burger</button>
+  <button onclick="showDish('pizza')">Pizza</button>
+  <button onclick="showDish('drink')">Drink</button>
+</div>
+
   <!-- AR Scene -->
  <a-scene
     mindar-image="
@@ -87,6 +93,7 @@
 
       sceneEl.addEventListener("targetFound", () => {
         menuUI.classList.remove('hidden');
+        showDish('burger');
       });
 
       sceneEl.addEventListener("targetLost", () => {
@@ -115,6 +122,42 @@
 
     });
   </script>
+
+  <script>
+    function showDish(key) {
+      const dish = MENU[key];
+      if (!dish) return;
+
+      document.getElementById('dish-title').innerText = dish.title;
+      document.getElementById('dish-ingredients').innerText = dish.ingredients;
+      document.getElementById('dish-price').innerText = dish.price;
+
+      switchModel(dish.model);
+    }
+  </script>
+
+<script>
+  const MENU = {
+    burger: {
+      title: "Classic Burger",
+      ingredients: "Beef patty, cheddar cheese, lettuce, tomato, brioche bun",
+      price: "$8.99",
+      model: "#model1"
+    },
+    pizza: {
+      title: "Margherita Pizza",
+      ingredients: "Fresh mozzarella, tomato sauce, basil",
+      price: "$10.50",
+      model: "#model2"
+    },
+    drink: {
+      title: "Fresh Lemonade",
+      ingredients: "Lemon, mint, sparkling water",
+      price: "$3.99",
+      model: "#model3"
+    }
+  };
+</script>
 
 </body>
 </html>
