@@ -1,36 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <link rel="stylesheet" href="style.css" />
 
-    <style>
-      body { margin: 0; overflow: hidden; }
-      .ui {
-        position: fixed;
-        bottom: 20px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        gap: 10px;
-        z-index: 10;
-      }
-      button {
-        padding: 10px 14px;
-        font-size: 14px;
-      }
-    </style>
-  </head>
+    </head>
 
   <body>
 
-    <!-- UI Buttons -->
-    <div class="ui">
-      <button onclick="switchModel('model1.glb')">Model 1</button>
-      <button onclick="switchModel('model2.glb')">Model 2</button>
-      <button onclick="switchModel('model3.glb')">Model 3</button>
+    <!-- Top Bar -->
+    <div class="top-bar">
+    <h3>Scan the Image</h3>
     </div>
+
+    <!-- Bottom Controls -->
+    <div class="ui">
+    <button onclick="switchModel('model1.glb')">Chair</button>
+    <button onclick="switchModel('model2.glb')">Table</button>
+    <button onclick="switchModel('model3.glb')">Lamp</button>
+    </div>
+
+    
 
     <a-scene
       mindar-image="imageTargetSrc: targets2.mind;"
@@ -75,7 +68,25 @@
     <script>
       function switchModel(path) {
         const model = document.querySelector('#arModel');
-        model.setAttribute('src', path);
+
+        model.setAttribute('animation__out', {
+          property: 'scale',
+          to: '0 0 0',
+          dur: 200,
+          easing: 'easeInQuad'
+        });
+
+        setTimeout(() => {
+          model.setAttribute('src', path);
+
+          model.setAttribute('animation__in', {
+            property: 'scale',
+            from: '0 0 0',
+            to: '0.1 0.1 0.1',
+            dur: 300,
+            easing: 'easeOutBack'
+          });
+        }, 220);
       }
     </script>
 
