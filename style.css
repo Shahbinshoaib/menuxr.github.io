@@ -133,3 +133,13 @@ body {
 .hidden {
   display: none;
 }
+
+/* Removes the default A-Frame 'Enter VR' button overlay */
+.a-enter-vr {
+  display: none !important;
+}
+
+/* Optional: Removes the 'Enter AR' button on specific mobile browsers */
+.a-enter-ar {
+  display: none !important;
+}
