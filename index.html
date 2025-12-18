@@ -23,10 +23,17 @@
     <button onclick="switchModel('model3.glb')">Lamp</button>
     </div>
 
-    
+    <!-- Scanning UI -->
+    <div id="scanning-ui" class="overlay hidden">
+      <img src="logo1.png" class="logo" />
+      <p>Scan the image</p>
+    </div>
+
 
     <a-scene
-      mindar-image="imageTargetSrc: targets2.mind; filterBeta: 10"
+      mindar-image="imageTargetSrc: targets2.mind;
+       filterBeta: 10;
+       uiScanning: #scanning-ui;"
       color-space="sRGB"
       mindar-image="warmupTolerance: 1"
       mindar-image="missTolerance: 1"
