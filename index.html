@@ -23,7 +23,7 @@
   </div>
 
   <!-- AR Scene -->
-  <a-scene
+ <a-scene
     mindar-image="
       imageTargetSrc: targets2.mind;
       filterBeta: 10;
@@ -35,8 +35,9 @@
     "
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
+    vr-mode-ui="false"
+    device-orientation-permission-ui="false">
+
 
     <a-assets>
       <a-asset-item id="model1" src="model1.glb"></a-asset-item>
