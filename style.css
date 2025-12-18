@@ -48,10 +48,6 @@ body {
   z-index: 20;
 }
 
-.hidden {
-  display: none;
-}
-
 .logo {
   width: 250px;
   margin-bottom: 16px;
@@ -76,7 +72,7 @@ body {
 /* Bottom AR Menu UI */
 .menu-ui {
   position: fixed;
-  bottom: 16px;
+  bottom: 88px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -90,9 +86,21 @@ body {
   background: rgba(20, 20, 20, 0.75);
   backdrop-filter: blur(10px);
   border-radius: 16px;
+  animation: slideUp 0.35s ease-out;
   padding: 16px;
   color: white;
   pointer-events: auto;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Typography */
@@ -142,4 +150,8 @@ body {
 /* Optional: Removes the 'Enter AR' button on specific mobile browsers */
 .a-enter-ar {
   display: none !important;
+}
+.ui button.active {
+  background: black;
+  color: white;
 }

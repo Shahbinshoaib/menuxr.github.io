@@ -34,6 +34,7 @@
       uiLoading: no;
       uiError: no;
     "
+    pointer-events: none;
     color-space="sRGB"
     renderer="colorManagement: true, physicallyCorrectLights"
     vr-mode-ui="enabled: false"
@@ -84,60 +85,7 @@
     <button onclick="showDish('drink')">Drink</button>
   </div>
 
-  <!-- Logic -->
-  <script>
-    window.addEventListener('DOMContentLoaded', () => {
-
-      const sceneEl = document.querySelector('a-scene');
-      const menuUI = document.getElementById('menu-ui');
-      const model = document.getElementById('arModel');
-
-      sceneEl.addEventListener("targetFound", () => {
-        menuUI.classList.remove('hidden');
-        showDish('burger');
-      });
-
-      sceneEl.addEventListener("targetLost", () => {
-        menuUI.classList.add('hidden');
-      });
-
-      window.switchModel = (src) => {
-        model.setAttribute('animation__out', {
-          property: 'scale',
-          to: '0 0 0',
-          dur: 200,
-          easing: 'easeInQuad'
-        });
-
-        setTimeout(() => {
-          model.setAttribute('src', src);
-          model.setAttribute('animation__in', {
-            property: 'scale',
-            from: '0 0 0',
-            to: '2 2 2',
-            dur: 300,
-            easing: 'easeOutBack'
-          });
-        }, 220);
-      };
-
-    });
-  </script>
-
-  <script>
-    function showDish(key) {
-      const dish = MENU[key];
-      if (!dish) return;
-
-      document.getElementById('dish-title').innerText = dish.title;
-      document.getElementById('dish-ingredients').innerText = dish.ingredients;
-      document.getElementById('dish-price').innerText = dish.price;
-
-      switchModel(dish.model);
-    }
-  </script>
-
-<script>
+ <script>
   const MENU = {
     burger: {
       title: "Classic Burger",
@@ -158,7 +106,61 @@
       model: "#model3"
     }
   };
+
+  let model;
+
+  window.showDish = function (key) {
+    const dish = MENU[key];
+    if (!dish) return;
+
+    document.getElementById('dish-title').innerText = dish.title;
+    document.getElementById('dish-ingredients').innerText = dish.ingredients;
+    document.getElementById('dish-price').innerText = dish.price;
+    document.querySelectorAll('.ui button')
+      .forEach(b => b.classList.remove('active'));
+    event.target.classList.add('active');
+
+    switchModel(dish.model);
+  };
+
+  window.switchModel = function (src) {
+    if (!model) return;
+
+    model.setAttribute('animation__out', {
+      property: 'scale',
+      to: '0 0 0',
+      dur: 200,
+      easing: 'easeInQuad'
+    });
+
+    setTimeout(() => {
+      model.setAttribute('src', src);
+      model.setAttribute('animation__in', {
+        property: 'scale',
+        from: '0 0 0',
+        to: '2 2 2',
+        dur: 300,
+        easing: 'easeOutBack'
+      });
+    }, 220);
+  };
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const sceneEl = document.querySelector('a-scene');
+    const menuUI = document.getElementById('menu-ui');
+    model = document.getElementById('arModel');
+
+    sceneEl.addEventListener("targetFound", () => {
+      menuUI.classList.remove('hidden');
+      showDish('burger');
+    });
+
+    sceneEl.addEventListener("targetLost", () => {
+      menuUI.classList.add('hidden');
+    });
+  });
 </script>
+
 
 </body>
 </html>
