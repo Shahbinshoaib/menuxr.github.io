@@ -5,6 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+    <script>
+      const sceneEl = document.querySelector('a-scene');
+      const menuUI = document.getElementById('menu-ui');
+
+      sceneEl.addEventListener("targetFound", () => {
+        menuUI.classList.remove('hidden');
+      });
+
+      sceneEl.addEventListener("targetLost", () => {
+        menuUI.classList.add('hidden');
+      });
+    </script>
+
+    <script>
+      function showDish(data) {
+        document.getElementById('dish-title').innerText = data.title;
+        document.getElementById('dish-ingredients').innerText = data.ingredients;
+        document.getElementById('dish-price').innerText = data.price;
+        switchModel(data.model);
+      }
+    </script>
+
+
     <link rel="stylesheet" href="style.css" />
 
     </head>
@@ -72,6 +95,28 @@
 
       </a-entity>
     </a-scene>
+
+    <!-- AR Menu UI -->
+    <div id="menu-ui" class="menu-ui hidden">
+
+      <div class="menu-card">
+        <h2 id="dish-title">Classic Burger</h2>
+
+        <p id="dish-ingredients">
+          Beef patty, cheddar cheese, lettuce, tomato, brioche bun
+        </p>
+
+        <div class="menu-footer">
+          <span id="dish-price">$8.99</span>
+
+          <div class="menu-actions">
+            <button onclick="switchModel('#model1')">View</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
 
     <!-- Model Switch Logic -->
     <script>
