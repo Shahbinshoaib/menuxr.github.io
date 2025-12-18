@@ -26,8 +26,10 @@
     
 
     <a-scene
-      mindar-image="imageTargetSrc: targets2.mind;"
+      mindar-image="imageTargetSrc: targets2.mind; filterBeta: 10"
       color-space="sRGB"
+      mindar-image="warmupTolerance: 1"
+      mindar-image="missTolerance: 1"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false">
