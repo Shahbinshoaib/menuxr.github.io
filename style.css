@@ -155,3 +155,78 @@ body {
   background: black;
   color: white;
 }
+
+.app-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+}
+
+.app-logo {
+  height: 32px;
+}
+
+.plate-btn {
+  position: relative;
+  font-size: 22px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(10px);
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+#plate-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ff4d4d;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 999px;
+}
+
+.menu-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.menu-actions button {
+  background: rgba(255,255,255,0.85);
+  border: none;
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.menu-actions .remove {
+  background: rgba(255,255,255,0.4);
+}
+
+.categories {
+  position: fixed;
+  bottom: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  z-index: 12;
+}
+
+.categories button {
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  border: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 600;
+  color: white;
+}
+
+.categories button.active {
+  background: white;
+  color: black;
+}

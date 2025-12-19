@@ -11,10 +11,15 @@
 
 <body>
 
-  <!-- Top Hint -->
-  <div class="top-bar">
-    <h3>Restaurant Name</h3>
+  <div class="top-bar app-bar">
+    <img src="Logo1.png" class="app-logo" />
+
+    <div class="plate-btn" onclick="togglePlate()">
+      🍽️
+      <span id="plate-count">0</span>
+    </div>
   </div>
+
 
   <!-- Scanning UI -->
   <div id="scanning-ui" class="overlay hidden">
@@ -74,16 +79,23 @@
 
       <div class="menu-footer">
         <span id="dish-price">$8.99</span>
+        <div class="menu-actions">
+          <button onclick="addToPlate()">＋ Add</button>
+          <button class="remove" onclick="removeFromPlate()">−</button>
+        </div>
+
         <button onclick="switchModel('#model1')">View</button>
       </div>
     </div>
     
   </div>
-  <div class="ui">
-    <button onclick="showDish('burger')">Burger</button>
-    <button onclick="showDish('pizza')">Pizza</button>
-    <button onclick="showDish('drink')">Drink</button>
+  <div class="categories">
+    <button class="active" onclick="selectCategory('main')">Main Course</button>
+    <button onclick="selectCategory('dessert')">Dessert</button>
   </div>
+
+  <div class="ui" id="item-buttons"></div>
+
 
  <script>
   const MENU = {
