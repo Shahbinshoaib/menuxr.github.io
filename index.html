@@ -2,177 +2,65 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-  <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
 
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    #ui {
+      position: fixed;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      background: white;
+      padding: 8px;
+      border-radius: 6px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <div class="top-bar app-bar">
-    <img src="Logo1.png" class="app-logo" />
+<div id="ui">
+  <input id="ytUrl" placeholder="Paste YouTube URL" />
+  <button onclick="setVideo()">Load</button>
+</div>
 
-    <div class="plate-btn" onclick="togglePlate()">
-      🍽️
-      <span id="plate-count">0</span>
-    </div>
-  </div>
+<a-scene
+  mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind;"
+  vr-mode-ui="enabled: false"
+  device-orientation-permission-ui="enabled: false"
+>
 
+  <a-assets>
+    <iframe id="ytVideo" src="" allow="autoplay; encrypted-media"></iframe>
+  </a-assets>
 
-  <!-- Scanning UI -->
-  <div id="scanning-ui" class="overlay hidden">
-    <img src="./Logo1.png" class="logo" />
-    <p>Scan the image</p>
-  </div>
+  <a-camera look-controls="enabled: false"></a-camera>
 
-  
-  <!-- AR Scene -->
- <a-scene
-    mindar-image="
-      imageTargetSrc: targets2.mind;
-      filterBeta: 10;
-      warmupTolerance: 1;
-      missTolerance: 1;
-      uiScanning: #scanning-ui;
-      uiLoading: no;
-      uiError: no;
-    "
-    pointer-events: none;
-    color-space="sRGB"
-    renderer="colorManagement: true, physicallyCorrectLights"
-    vr-mode-ui="enabled: false"
-    device-orientation-permission-ui="enabled: false">
+  <a-entity mindar-image-target="targetIndex: 0">
+    <a-video
+      src="#ytVideo"
+      position="0 0 0"
+      width="1"
+      height="0.56"
+      muted="true"
+      autoplay="true">
+    </a-video>
+  </a-entity>
 
+</a-scene>
 
-    <a-assets>
-      <a-asset-item id="model1" src="model1.glb"></a-asset-item>
-      <a-asset-item id="model2" src="model2.glb"></a-asset-item>
-      <a-asset-item id="model3" src="model3.glb"></a-asset-item>
-    </a-assets>
+<script>
+  function setVideo() {
+    const url = document.getElementById("ytUrl").value;
+    const videoId = url.split("v=")[1]?.split("&")[0];
+    if (!videoId) return alert("Invalid YouTube URL");
 
-    <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
-
-    <a-entity mindar-image-target="targetIndex: 0">
-
-      <a-plane visible="false" width="1" height="1"></a-plane>
-
-      <a-gltf-model
-        id="arModel"
-        src="#model1"
-        position="0 0.01 0"
-        rotation="90 0 0"
-        scale="2 2 2">
-      </a-gltf-model>
-
-    </a-entity>
-  </a-scene>
-
-  <!-- AR Menu UI -->
-  <div id="menu-ui" class="menu-ui hidden">
-    <div class="menu-card">
-      <h2 id="dish-title">Classic Burger</h2>
-      <p id="dish-ingredients">
-        Beef patty, cheddar cheese, lettuce, tomato, brioche bun
-      </p>
-
-      <div class="menu-footer">
-        <span id="dish-price">$8.99</span>
-        <div class="menu-actions">
-          <button onclick="addToPlate()">＋ Add</button>
-          <button class="remove" onclick="removeFromPlate()">−</button>
-        </div>
-
-        <button onclick="switchModel('#model1')">View</button>
-      </div>
-    </div>
-    
-  </div>
-  <div class="categories">
-    <button class="active" onclick="selectCategory('main')">Main Course</button>
-    <button onclick="selectCategory('dessert')">Dessert</button>
-  </div>
-
-  <div class="ui" id="item-buttons"></div>
-
-
- <script>
-  const MENU = {
-    burger: {
-      title: "Classic Burger",
-      ingredients: "Beef patty, cheddar cheese, lettuce, tomato, brioche bun",
-      price: "$8.99",
-      model: "#model1"
-    },
-    pizza: {
-      title: "Margherita Pizza",
-      ingredients: "Fresh mozzarella, tomato sauce, basil",
-      price: "$10.50",
-      model: "#model2"
-    },
-    drink: {
-      title: "Fresh Lemonade",
-      ingredients: "Lemon, mint, sparkling water",
-      price: "$3.99",
-      model: "#model3"
-    }
-  };
-
-  let model;
-
-  window.showDish = function (key) {
-    const dish = MENU[key];
-    if (!dish) return;
-
-    document.getElementById('dish-title').innerText = dish.title;
-    document.getElementById('dish-ingredients').innerText = dish.ingredients;
-    document.getElementById('dish-price').innerText = dish.price;
-    document.querySelectorAll('.ui button')
-      .forEach(b => b.classList.remove('active'));
-    event.target.classList.add('active');
-
-    switchModel(dish.model);
-  };
-
-  window.switchModel = function (src) {
-    if (!model) return;
-
-    model.setAttribute('animation__out', {
-      property: 'scale',
-      to: '0 0 0',
-      dur: 200,
-      easing: 'easeInQuad'
-    });
-
-    setTimeout(() => {
-      model.setAttribute('src', src);
-      model.setAttribute('animation__in', {
-        property: 'scale',
-        from: '0 0 0',
-        to: '2 2 2',
-        dur: 300,
-        easing: 'easeOutBack'
-      });
-    }, 220);
-  };
-
-  window.addEventListener('DOMContentLoaded', () => {
-    const sceneEl = document.querySelector('a-scene');
-    const menuUI = document.getElementById('menu-ui');
-    model = document.getElementById('arModel');
-
-    sceneEl.addEventListener("targetFound", () => {
-      menuUI.classList.remove('hidden');
-      showDish('burger');
-    });
-
-    sceneEl.addEventListener("targetLost", () => {
-      menuUI.classList.add('hidden');
-    });
-  });
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1`;
+    document.getElementById("ytVideo").src = embedUrl;
+  }
 </script>
-
 
 </body>
 </html>
