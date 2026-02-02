@@ -1,66 +1,78 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- A-Frame -->
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
 
-  <style>
-    #ui {
-      position: fixed;
-      top: 10px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 10;
-      background: white;
-      padding: 8px;
-      border-radius: 6px;
-    }
-  </style>
-</head>
+    <!-- MindAR -->
+    <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
+  </head>
 
-<body>
+  <body style="margin: 0; overflow: hidden">
 
-<div id="ui">
-  <input id="ytUrl" placeholder="Paste YouTube URL" />
-  <button onclick="setVideo()">Load</button>
-</div>
+    <a-scene
+      mindar-image="imageTargetSrc: https://your-domain.com/targets/qr-target.mind;"
+      color-space="sRGB"
+      renderer="colorManagement: true; physicallyCorrectLights"
+      vr-mode-ui="enabled: false"
+      device-orientation-permission-ui="enabled: false">
 
-<a-scene
-  mindar-image="imageTargetSrc: https://cdn.jsdelivr.net/gh/hiukim/mind-ar-js@1.2.5/examples/image-tracking/assets/card-example/card.mind;"
-  vr-mode-ui="enabled: false"
-  device-orientation-permission-ui="enabled: false"
->
+      <!-- Assets -->
+      <a-assets>
+        <!-- QR reference image (optional visual plane) -->
+        <img id="qrImage" src="qr.png" />
 
-  <a-assets>
-    <iframe id="ytVideo" src="" allow="autoplay; encrypted-media"></iframe>
-  </a-assets>
+        <!-- Dummy 3D models -->
+        <a-asset-item id="modelMain" src="models/mainModel.glb"></a-asset-item>
+        <a-asset-item id="modelLeft" src="models/sideModelLeft.glb"></a-asset-item>
+        <a-asset-item id="modelRight" src="models/sideModelRight.glb"></a-asset-item>
+      </a-assets>
 
-  <a-camera look-controls="enabled: false"></a-camera>
+      <!-- Camera -->
+      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-  <a-entity mindar-image-target="targetIndex: 0">
-    <a-video
-      src="#ytVideo"
-      position="0 0 0"
-      width="1"
-      height="0.56"
-      muted="true"
-      autoplay="true">
-    </a-video>
-  </a-entity>
+      <!-- TARGET -->
+      <a-entity mindar-image-target="targetIndex: 0">
 
-</a-scene>
+        <!-- Optional QR plane -->
+        <a-plane
+          src="#qrImage"
+          position="0 0 0"
+          rotation="-90 0 0"
+          width="1"
+          height="1"
+          opacity="0.4">
+        </a-plane>
 
-<script>
-  function setVideo() {
-    const url = document.getElementById("ytUrl").value;
-    const videoId = url.split("v=")[1]?.split("&")[0];
-    if (!videoId) return alert("Invalid YouTube URL");
+        <!-- MAIN MODEL -->
+        <a-gltf-model
+          src="#modelMain"
+          position="0 0.05 0"
+          scale="0.02 0.02 0.02"
+          animation="property: position; from: 0 -0.1 0; to: 0 0.05 0; dur: 1000; easing: easeOutBack"
+          animation__float="property: position; to: 0 0.08 0; dir: alternate; loop: true; dur: 2000">
+        </a-gltf-model>
 
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&playsinline=1`;
-    document.getElementById("ytVideo").src = embedUrl;
-  }
-</script>
+        <!-- LEFT MODEL -->
+        <a-gltf-model
+          src="#modelLeft"
+          position="-0.15 0.03 0"
+          scale="0.015 0.015 0.015"
+          animation="property: scale; from: 0 0 0; to: 0.015 0.015 0.015; dur: 800; easing: easeOutElastic">
+        </a-gltf-model>
 
-</body>
+        <!-- RIGHT MODEL -->
+        <a-gltf-model
+          src="#modelRight"
+          position="0.15 0.03 0"
+          scale="0.015 0.015 0.015"
+          animation="property: scale; from: 0 0 0; to: 0.015 0.015 0.015; dur: 800; easing: easeOutElastic">
+        </a-gltf-model>
+
+      </a-entity>
+
+    </a-scene>
+  </body>
 </html>
