@@ -21,7 +21,7 @@
         <img id="savethedateImage" src="savethedate.jpg" />
         <img id="wishesImage" src="wishes.jpg" />   
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
-
+        <video id="video" src="video.mp4" loop></video>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -48,6 +48,14 @@
           scale="1 1.5 1"
           rotation="0 -35 0"
         ></a-plane>
+
+        <a-video
+          src="#video"
+          position="0 1.4 0"
+          width="1"
+          height="0.6"
+          play-on-click
+        ></a-video>
 
 
         <a-text
