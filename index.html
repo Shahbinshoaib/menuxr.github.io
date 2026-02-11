@@ -7,7 +7,7 @@
 
   <body>
     <a-scene
-      mindar-image="imageTargetSrc: targets-2.mind; filterMinCF:0.1; filterBeta: 10000; warmupTolerance: 1; missTolerance: 10"
+      mindar-image="imageTargetSrc: targets-2.mind; filterMinCF:1; filterBeta: 1000; warmupTolerance: 1; missTolerance: 10"
       color-space="sRGB"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
@@ -26,8 +26,8 @@
 
         <a-plane
           src="#bgImage"
-          position="0 0 -0.2"
-          scale="1 2 1"
+          position="0 0.1 -0.2"
+          scale="1.2 2.2 1"
           rotation="0 0 0"
         ></a-plane>
 
