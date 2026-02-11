@@ -7,7 +7,7 @@
 
   <body>
     <a-scene
-      mindar-image="imageTargetSrc: targets-6.mind;"
+      mindar-image="imageTargetSrc: targets-6.mind; filterMinCF:0.1; filterBeta: 10; warmupTolerance: 1; missTolerance: 1"
       color-space="sRGB"
       renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
@@ -27,7 +27,7 @@
 
        <a-text
           value="Shahzaib & Zeelaf"
-          position="1 0.45 0.15"
+          position="1 0 0"
           rotation="90 0 0"
           align="center"
           color="#ffffff"
