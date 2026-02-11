@@ -32,12 +32,15 @@
 
       </a-assets>
 
-      <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
+      <a-camera
+        position="0 0 0"
+        look-controls="enabled: false"
+        raycaster="objects: .clickable"
+        cursor="rayOrigin: mouse"
+      ></a-camera>
 
       <a-entity 
       mindar-image-target="targetIndex: 0"
-      cursor="rayOrigin: mouse"
-      raycaster="objects: .clickable">
       >
 
         <a-plane
@@ -122,37 +125,38 @@
           scale="0.5 0.5 0.5"
         ></a-gltf-model>
 
-        <a-gltf-model
-          src="#locationIcon"
-          position="0.6 -0.5 0.1"
-          rotation="0 0 0"
-          scale="0.07 0.07 0.07"
+        <a-entity
+          id="mapButton"
           class="clickable"
-          id="myButton"
-        ></a-gltf-model>
+          position="0.6 -0.5 0.1"
+        >
+          <a-gltf-model
+            src="#locationIcon"
+            scale="0.07 0.07 0.07"
+          ></a-gltf-model>
+        </a-entity>
 
       </a-entity>
     </a-scene>
 
     <script>
-      const button = document.querySelector('#myButton');
+      document.addEventListener('DOMContentLoaded', () => {
+        const video = document.querySelector('#video');
+        const videoPlane = document.querySelector('#videoPlane');
+        const mapButton = document.querySelector('#mapButton');
 
-      button.addEventListener('click', () => {
-        window.location.href = 'https://www.google.com/maps';
-      });
-    </script>
+        // VIDEO TAP
+        videoPlane.addEventListener('touchstart', () => {
+          video.play().catch(e => console.log(e));
+        });
 
-
-    <script>
-      const videoEl = document.querySelector('#video');
-      const videoPlane = document.querySelector('#videoPlane');
-
-      videoPlane.addEventListener('click', () => {
-        videoEl.play().catch(err => {
-          console.log('Video play blocked:', err);
+        // MAP TAP
+        mapButton.addEventListener('touchstart', () => {
+          window.location.href = 'https://www.google.com/maps';
         });
       });
     </script>
+
 
 
 
