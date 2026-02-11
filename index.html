@@ -22,12 +22,23 @@
         <img id="wishesImage" src="wishes.jpg" />   
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
         <a-asset-item id="locationIcon" src="locationIcon.glb"></a-asset-item>
-        <video id="video" src="video.mp4" loop></video>
+        <video
+          id="video"
+          src="video.mp4"
+          loop
+          muted
+          playsinline
+        ></video>
+
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <a-entity mindar-image-target="targetIndex: 0">
+      <a-entity 
+      mindar-image-target="targetIndex: 0"
+      cursor="rayOrigin: mouse"
+      raycaster="objects: .clickable">
+      >
 
         <a-plane
           src="#bgImage"
@@ -52,10 +63,11 @@
 
         <a-video
           src="#video"
+          id="videoPlane"
           position="0 1.7 -0.2"
           width="1"
           height="0.6"
-          play-on-click
+          class="clickable"
         ></a-video>
 
 
@@ -123,11 +135,25 @@
     </a-scene>
 
     <script>
-  const button = document.querySelector('#myButton');
-  button.addEventListener('click', () => {
-    window.open('https://www.google.com/maps', '_blank'); // Opens URL in a new tab
-  });
-</script>
+      const button = document.querySelector('#myButton');
+
+      button.addEventListener('click', () => {
+        window.location.href = 'https://www.google.com/maps';
+      });
+    </script>
+
+
+    <script>
+      const videoEl = document.querySelector('#video');
+      const videoPlane = document.querySelector('#videoPlane');
+
+      videoPlane.addEventListener('click', () => {
+        videoEl.play().catch(err => {
+          console.log('Video play blocked:', err);
+        });
+      });
+    </script>
+
 
 
   </body>
