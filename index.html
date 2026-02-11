@@ -19,6 +19,8 @@
         <img id="bgImage" src="bg2.jpg" />
         <img id="daysImage" src="days.png" />
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
+        <a-asset-item id="flower" src="flower.glb"></a-asset-item>
+
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -82,7 +84,12 @@
           scale="0.4 0.4 0.4"
         ></a-text>
 
-          
+        <a-gltf-model
+          src="#flower"
+          position="0 0 0.2"
+          rotation="0 0 0"
+          scale="0.5 0.5 0.5"
+        ></a-gltf-model>
 
         <a-gltf-model
           src="#localModel"
