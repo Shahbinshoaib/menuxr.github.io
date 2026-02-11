@@ -7,20 +7,7 @@
 
   <body>
 
-    <div id="startButton"
-      style="
-        position: fixed;
-        inset: 0;
-        background: black;
-        color: white;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 24px;
-        z-index: 9999;
-      ">
-      Tap to Start
-    </div>
+    
 
 
     <a-scene
@@ -38,17 +25,13 @@
         <img id="savethedateImage" src="savethedate.jpg" />
         <img id="wishesImage" src="wishes.jpg" />   
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
-        <a-asset-item id="locationIcon" src="locationIcon.glb"></a-asset-item>
-        <video id="video" src="video.mp4" loop muted playsinline></video>
-
 
       </a-assets>
 
       <a-camera
         position="0 0 0"
         look-controls="enabled: false"
-        raycaster="objects: .clickable"
-        cursor="rayOrigin: mouse"
+        
       ></a-camera>
 
       <a-entity 
@@ -75,15 +58,6 @@
           scale="1 1.5 1"
           rotation="0 -35 0"
         ></a-plane>
-
-        <a-video
-          src="#video"
-          id="videoPlane"
-          position="0 1.7 -0.2"
-          width="1"
-          height="0.6"
-          class="clickable"
-        ></a-video>
 
 
       
@@ -137,57 +111,12 @@
           scale="0.5 0.5 0.5"
         ></a-gltf-model>
 
-        <a-entity
-          id="mapButton"
-          class="clickable"
-          position="0.6 -0.5 0.1"
-        >
-          <a-gltf-model
-            src="#locationIcon"
-            scale="0.07 0.07 0.07"
-          ></a-gltf-model>
-        </a-entity>
 
       </a-entity>
     </a-scene>
 
-    <script>
-      document.addEventListener('DOMContentLoaded', () => {
-        const video = document.querySelector('#video');
-        document.querySelector('#videoPlane')
-        .addEventListener('click', () => video.play());
 
-        document.querySelector('#mapButton')
-        .addEventListener('click', () => {
-          window.location.href = 'https://www.google.com/maps';
-        });
-
-        // VIDEO TAP
-        videoPlane.addEventListener('touchstart', () => {
-          video.play().catch(e => console.log(e));
-        });
-
-        // MAP TAP
-        mapButton.addEventListener('touchstart', () => {
-          window.location.href = 'https://www.google.com/maps';
-        });
-      });
-    </script>
-
-    <script>
-      const startButton = document.getElementById('startButton');
-      const video = document.getElementById('video');
-
-      startButton.addEventListener('click', async () => {
-        // unlock media
-        try {
-          await video.play();
-          video.pause();
-        } catch (e) {}
-
-        startButton.style.display = 'none';
-      });
-    </script>
+  
 
 
 
