@@ -16,13 +16,19 @@
 
       <a-assets>
         <!-- Local files -->
-        <img id="overlay" src="overlay.png" />
+        <img id="bgImage" src="background.jpeg" />
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
       </a-assets>
 
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
       <a-entity mindar-image-target="targetIndex: 0">
+
+        <a-plane
+          src="#bgImage"
+          position="0 -0.2 0"
+          rotation="90 0 0"
+        ></a-plane>
 
        <a-text
           value="Shahzaib & Zeelaf"
