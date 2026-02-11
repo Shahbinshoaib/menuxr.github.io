@@ -7,7 +7,20 @@
 
   <body>
 
-    
+    <div id="startOverlay"
+      style="
+        position: fixed;
+        inset: 0;
+        background: black;
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        z-index: 9999;
+      ">
+      Tap to Start
+    </div>
 
 
     <a-scene
@@ -25,7 +38,12 @@
         <img id="savethedateImage" src="savethedate.jpg" />
         <img id="wishesImage" src="wishes.jpg" />   
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
-
+        <audio
+            id="bgAudio"
+            src="bgAudio.mp3"
+            loop
+            preload="auto"
+          ></audio>
       </a-assets>
 
       <a-camera
@@ -115,6 +133,20 @@
       </a-entity>
     </a-scene>
 
+<script>
+  const startOverlay = document.getElementById('startOverlay');
+  const audio = document.getElementById('bgAudio');
+
+  startOverlay.addEventListener('click', async () => {
+    try {
+      await audio.play(); // 🔓 unlocks audio
+    } catch (e) {
+      console.log('Audio blocked:', e);
+    }
+
+    startOverlay.style.display = 'none';
+  });
+</script>
 
   
 
