@@ -52,9 +52,11 @@
         
       ></a-camera>
 
-      <a-entity 
-      mindar-image-target="targetIndex: 0"
+      <a-entity
+        mindar-image-target="targetIndex: 0"
+        id="target"
       >
+
 
         <a-plane
           src="#bgImage"
@@ -134,6 +136,7 @@
     </a-scene>
 
 <script>
+  const target = document.getElementById('target');
   const startOverlay = document.getElementById('startOverlay');
   const audio = document.getElementById('bgAudio');
 
@@ -146,6 +149,16 @@
 
     startOverlay.style.display = 'none';
   });
+
+  target.addEventListener('targetFound', () => {
+    audio.play();
+  });
+
+  target.addEventListener('targetLost', () => {
+    audio.pause();
+  });
+
+  
 </script>
 
   
