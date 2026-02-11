@@ -7,14 +7,8 @@
 
   <body>
     <a-scene
-      mindar-image="imageTargetSrc: targets-2.mind;"
+      mindar-image="imageTargetSrc: targets-2.mind; filterMinCF:0.01; filterBeta: 1; warmupTolerance: 1; missTolerance: 10"
       color-space="sRGB"
-       filterMinCF= "1";
-          filterBeta= "10"; 
-          visibility=" false";
-          warmupTolerance="1"; 
-          missTolerance="5"; 
-      renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
       embedded
