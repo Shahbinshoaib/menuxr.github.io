@@ -20,8 +20,8 @@
         <img id="daysImage" src="days.png" />
         <img id="savethedateImage" src="savethedate.jpg" />
         <img id="wishesImage" src="wishes.jpg" />   
-        <img id="mapIcon" src="mapIcon.png" />   
         <a-asset-item id="localModel" src="model4.glb"></a-asset-item>
+        <a-asset-item id="locationIcon" src="locationIcon.glb"></a-asset-item>
         <video id="video" src="video.mp4" loop></video>
       </a-assets>
 
@@ -82,7 +82,7 @@
 
         <a-text
           value="Our Wedding Day"
-          position="0 0.7 0"
+          position="0 0.6 0"
           rotation="0 0 0"
           align="center"
           color="#ffffff"
@@ -93,12 +93,12 @@
 
         <a-text
           value="12\nFeb"
-          position="-1.1 0.5 0.1"
+          position="-1.1 0.4 0.1"
           rotation="0 35 0"
           align="center"
           color="#000000"
           outline-width="1"
-          scale="0.7 0.7 0.7"
+          scale="0.8 0.8 0.8"
         ></a-text>
         
         <a-text
@@ -115,6 +115,13 @@
         <a-gltf-model
           src="#localModel"
           position="0 -0.5 0.1"
+          rotation="0 0 0"
+          scale="0.5 0.5 0.5"
+        ></a-gltf-model>
+
+        <a-gltf-model
+          src="#locationIcon"
+          position="0.2 -0.5 0.1"
           rotation="0 0 0"
           scale="0.5 0.5 0.5"
         ></a-gltf-model>
