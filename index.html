@@ -1,48 +1,47 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <title>Invitation AR</title>
-
-    <!-- A-Frame -->
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
-
-    <!-- MindAR -->
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
-
-    <style>
-      body { margin: 0; overflow: hidden; }
-    </style>
   </head>
 
   <body>
     <a-scene
       mindar-image="imageTargetSrc: targets.mind;"
+      color-space="sRGB"
+      renderer="colorManagement: true, physicallyCorrectLights"
       vr-mode-ui="enabled: false"
       device-orientation-permission-ui="enabled: false"
       embedded
     >
+
+      <a-assets>
+        <!-- Local files -->
+        <img id="overlay" src="overlay.png" />
+        <a-asset-item id="localModel" src="model.glb"></a-asset-item>
+      </a-assets>
+
       <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-      <!-- Target index 0 = first image in compiler -->
       <a-entity mindar-image-target="targetIndex: 0">
 
-        <!-- Example: 3D model -->
-        <a-gltf-model
-          src="model1.glb"
+        <a-plane
+          src="#overlay"
           position="0 0 0"
-          scale="0.4 0.4 0.4"
-          rotation="0 0 0"
-        ></a-gltf-model>
+          width="1"
+          height="0.7"
+        ></a-plane>
 
-        <!-- Example: floating text -->
-        <a-text
-          value="Shahzaib & Zeelaf"
-          position="0 0.6 0"
-          align="center"
-          color="#ffffff"
-          scale="1.5 1.5 1.5"
-        ></a-text>
+        <a-gltf-model
+          src="#localModel"
+          position="0 0 0.15"
+          scale="0.2 0.2 0.2"
+          animation="property: position;
+                     to: 0 0.25 0.15;
+                     dur: 1200;
+                     loop: true;
+                     dir: alternate"
+        ></a-gltf-model>
 
       </a-entity>
     </a-scene>
