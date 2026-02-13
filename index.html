@@ -60,15 +60,14 @@
       >
 
 
-        <a-entity
-          rounded-plane="
-            width: 1.3;
-            height: 1.9;
-            radius: 0.2;
-            src: #bgImage
-          "
+       <a-plane
+          src="#bgImage"
           position="0 0.35 -0.2"
-        ></a-entity>
+          width="1.3"
+          height="1.9"
+          rounded-plane="radius: 0.2"
+        ></a-plane>
+
 
 
 
@@ -172,19 +171,28 @@
 
 AFRAME.registerComponent('rounded-plane', {
   schema: {
-    width: { type: 'number', default: 1 },
-    height: { type: 'number', default: 1 },
-    radius: { type: 'number', default: 0.15 },
-    src: { type: 'selector' }
+    radius: { type: 'number', default: 0.15 }
   },
 
   init: function () {
-    const { width, height, radius, src } = this.data;
+    this.el.addEventListener('model-loaded', () => {});
+  },
+
+  update: function () {
+    const mesh = this.el.getObject3D('mesh');
+    if (!mesh) {
+      this.el.addEventListener('object3dset', () => this.update());
+      return;
+    }
+
+    const geometry = this.el.getAttribute('geometry');
+    const width = geometry.width;
+    const height = geometry.height;
+    const r = this.data.radius;
 
     const shape = new THREE.Shape();
     const w = width / 2;
     const h = height / 2;
-    const r = radius;
 
     shape.moveTo(-w + r, -h);
     shape.lineTo(w - r, -h);
@@ -196,19 +204,11 @@ AFRAME.registerComponent('rounded-plane', {
     shape.lineTo(-w, -h + r);
     shape.quadraticCurveTo(-w, -h, -w + r, -h);
 
-    const geometry = new THREE.ShapeGeometry(shape);
-
-    const texture = new THREE.TextureLoader().load(src.getAttribute('src'));
-
-    const material = new THREE.MeshBasicMaterial({
-      map: texture,
-      transparent: true
-    });
-
-    const mesh = new THREE.Mesh(geometry, material);
-    this.el.setObject3D('mesh', mesh);
+    mesh.geometry.dispose();
+    mesh.geometry = new THREE.ShapeGeometry(shape);
   }
 });
+
 
 
 
