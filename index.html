@@ -60,17 +60,16 @@
       >
 
 
-        <a-plane
-          position="0 0.35 -0.2"
-          scale="1.3 1.9 1"
-          material="
-            src: #bgImage;
-            transparent: true;
-            alphaMap: #roundedMask;
-            alphaTest: 0.01;
-            shader: standard;
+        <a-entity
+          rounded-plane="
+            width: 1.3;
+            height: 1.9;
+            radius: 0.2;
+            src: #bgImage
           "
-        ></a-plane>
+          position="0 0.35 -0.2"
+        ></a-entity>
+
 
 
 
@@ -92,7 +91,7 @@
 
       
        <a-text
-          value="Shahr \n&\n Shahrukh"
+          value="Shahrukh \n&\n Shahrukh"
           position="0 0.9 0"
           rotation="0 0 0"
           align="center"
@@ -171,33 +170,46 @@
   AFRAME.registerComponent('rounded', {
   schema: { radius: { type: 'number', default: 0.1 } },
 
+AFRAME.registerComponent('rounded-plane', {
+  schema: {
+    width: { type: 'number', default: 1 },
+    height: { type: 'number', default: 1 },
+    radius: { type: 'number', default: 0.15 },
+    src: { type: 'selector' }
+  },
+
   init: function () {
-    const geometry = new THREE.Shape();
-    const r = this.data.radius;
-    const w = this.el.getAttribute('geometry').width / 2;
-    const h = this.el.getAttribute('geometry').height / 2;
+    const { width, height, radius, src } = this.data;
 
-    geometry.moveTo(-w + r, -h);
-    geometry.lineTo(w - r, -h);
-    geometry.quadraticCurveTo(w, -h, w, -h + r);
-    geometry.lineTo(w, h - r);
-    geometry.quadraticCurveTo(w, h, w - r, h);
-    geometry.lineTo(-w + r, h);
-    geometry.quadraticCurveTo(-w, h, -w, h - r);
-    geometry.lineTo(-w, -h + r);
-    geometry.quadraticCurveTo(-w, -h, -w + r, -h);
+    const shape = new THREE.Shape();
+    const w = width / 2;
+    const h = height / 2;
+    const r = radius;
 
-    const mesh = new THREE.Mesh(
-      new THREE.ShapeGeometry(geometry),
-      new THREE.MeshBasicMaterial({
-        map: this.el.getObject3D('mesh').material.map,
-        transparent: true
-      })
-    );
+    shape.moveTo(-w + r, -h);
+    shape.lineTo(w - r, -h);
+    shape.quadraticCurveTo(w, -h, w, -h + r);
+    shape.lineTo(w, h - r);
+    shape.quadraticCurveTo(w, h, w - r, h);
+    shape.lineTo(-w + r, h);
+    shape.quadraticCurveTo(-w, h, -w, h - r);
+    shape.lineTo(-w, -h + r);
+    shape.quadraticCurveTo(-w, -h, -w + r, -h);
 
+    const geometry = new THREE.ShapeGeometry(shape);
+
+    const texture = new THREE.TextureLoader().load(src.getAttribute('src'));
+
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+      transparent: true
+    });
+
+    const mesh = new THREE.Mesh(geometry, material);
     this.el.setObject3D('mesh', mesh);
   }
 });
+
 
 
 
