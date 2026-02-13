@@ -20,7 +20,9 @@
     video.pause();
     video.currentTime = 0;
   });
-
+  video.play().catch(() => {
+    console.log('Autoplay failed, user interaction required.');
+  });
 
 
   startOverlay.addEventListener('click', async () => {
@@ -139,7 +141,7 @@
 
       <a-video
         src="#arVideo"
-        position="0 1 0"
+        position="0 1.2 0"
         width="1"
         height="0.56"
       ></a-video>
