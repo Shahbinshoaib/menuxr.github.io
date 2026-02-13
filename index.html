@@ -160,6 +160,38 @@
     audio.pause();
   });
 
+  AFRAME.registerComponent('rounded', {
+  schema: { radius: { type: 'number', default: 0.1 } },
+
+  init: function () {
+    const geometry = new THREE.Shape();
+    const r = this.data.radius;
+    const w = this.el.getAttribute('geometry').width / 2;
+    const h = this.el.getAttribute('geometry').height / 2;
+
+    geometry.moveTo(-w + r, -h);
+    geometry.lineTo(w - r, -h);
+    geometry.quadraticCurveTo(w, -h, w, -h + r);
+    geometry.lineTo(w, h - r);
+    geometry.quadraticCurveTo(w, h, w - r, h);
+    geometry.lineTo(-w + r, h);
+    geometry.quadraticCurveTo(-w, h, -w, h - r);
+    geometry.lineTo(-w, -h + r);
+    geometry.quadraticCurveTo(-w, -h, -w + r, -h);
+
+    const mesh = new THREE.Mesh(
+      new THREE.ShapeGeometry(geometry),
+      new THREE.MeshBasicMaterial({
+        map: this.el.getObject3D('mesh').material.map,
+        transparent: true
+      })
+    );
+
+    this.el.setObject3D('mesh', mesh);
+  }
+});
+
+
 
 </script>
 
