@@ -12,36 +12,33 @@
   const startOverlay = document.getElementById('startOverlay');
   const audio = document.getElementById('bgAudio');
 
-  target.addEventListener("targetFound", () => {
-    video.play();
+    target.addEventListener("targetFound", () => {
+    video.play().catch(() => {});
   });
 
   target.addEventListener("targetLost", () => {
     video.pause();
     video.currentTime = 0;
   });
-  video.play().catch(() => {
-    console.log('Autoplay failed, user interaction required.');
-  });
 
 
-  startOverlay.addEventListener('click', async () => {
-    try {
-      await audio.play(); // 🔓 unlocks audio
-    } catch (e) {
-      console.log('Audio blocked:', e);
-    }
+  // startOverlay.addEventListener('click', async () => {
+  //   try {
+  //     await audio.play(); // 🔓 unlocks audio
+  //   } catch (e) {
+  //     console.log('Audio blocked:', e);
+  //   }
 
-    startOverlay.style.display = 'none';
-  });
+  //   startOverlay.style.display = 'none';
+  // });
 
-  target.addEventListener('targetFound', () => {
-    audio.play();
-  });
+  // target.addEventListener('targetFound', () => {
+  //   audio.play();
+  // });
 
-  target.addEventListener('targetLost', () => {
-    audio.pause();
-  });
+  // target.addEventListener('targetLost', () => {
+  //   audio.pause();
+  // });
 
 
 
@@ -144,6 +141,8 @@
         position="0 1.2 0"
         width="1"
         height="0.56"
+        material="shader: flat; side: double;"
+
       ></a-video>
 
        <a-text
