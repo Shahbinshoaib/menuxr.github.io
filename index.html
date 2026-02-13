@@ -5,6 +5,48 @@
     <script src="https://cdn.jsdelivr.net/npm/mind-ar@1.2.5/dist/mindar-image-aframe.prod.js"></script>
   </head>
 
+
+  <script>
+  const video = document.querySelector("#arVideo");
+  const target = document.getElementById('target');
+  const startOverlay = document.getElementById('startOverlay');
+  const audio = document.getElementById('bgAudio');
+
+  target.addEventListener("targetFound", () => {
+    video.play();
+  });
+
+  target.addEventListener("targetLost", () => {
+    video.pause();
+    video.currentTime = 0;
+  });
+
+
+
+  startOverlay.addEventListener('click', async () => {
+    try {
+      await audio.play(); // 🔓 unlocks audio
+    } catch (e) {
+      console.log('Audio blocked:', e);
+    }
+
+    startOverlay.style.display = 'none';
+  });
+
+  target.addEventListener('targetFound', () => {
+    audio.play();
+  });
+
+  target.addEventListener('targetLost', () => {
+    audio.pause();
+  });
+
+
+
+
+
+</script>
+
   <body>
 
     <!-- <div id="startOverlay"
@@ -41,6 +83,15 @@
         <a-asset-item id="crescent" src="crescent.glb"></a-asset-item>
         <a-asset-item id="stage" src="ramadan_stage.glb"></a-asset-item>
         <a-asset-item id="mubarak" src="ramzanMubarak.glb"></a-asset-item>
+
+        <video
+          id="arVideo"
+          src="video1.mp4"
+          loop
+          muted
+          playsinline
+          webkit-playsinline
+        ></video>
 
         <audio
             id="bgAudio"
@@ -86,7 +137,13 @@
         ></a-plane>
  -->
 
-      
+      <a-video
+        src="#arVideo"
+        position="0 1 0"
+        width="1"
+        height="0.56"
+      ></a-video>
+
        <a-text
           value="Ramadan\n2026"
           position="0 0.3 0.2"
@@ -153,39 +210,6 @@
 
       </a-entity>
     </a-scene>
-
-<script>
-  const target = document.getElementById('target');
-  const startOverlay = document.getElementById('startOverlay');
-  const audio = document.getElementById('bgAudio');
-
-  startOverlay.addEventListener('click', async () => {
-    try {
-      await audio.play(); // 🔓 unlocks audio
-    } catch (e) {
-      console.log('Audio blocked:', e);
-    }
-
-    startOverlay.style.display = 'none';
-  });
-
-  target.addEventListener('targetFound', () => {
-    audio.play();
-  });
-
-  target.addEventListener('targetLost', () => {
-    audio.pause();
-  });
-
-
-
-
-
-</script>
-
-  
-
-
 
 
   </body>
