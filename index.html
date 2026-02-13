@@ -7,13 +7,11 @@
 
 
   <script>
-  const video = document.querySelector("#arVideo");
-  const target = document.getElementById('target');
-  const startOverlay = document.getElementById('startOverlay');
-  const audio = document.getElementById('bgAudio');
+ const video = document.querySelector("#arVideo");
+  const target = document.querySelector("#target");
 
-    target.addEventListener("targetFound", () => {
-    video.play().catch(() => {});
+  target.addEventListener("targetFound", () => {
+    video.play().catch(err => console.log("Play blocked:", err));
   });
 
   target.addEventListener("targetLost", () => {
@@ -90,6 +88,7 @@
           muted
           playsinline
           webkit-playsinline
+          crossorigin="anonymous"
         ></video>
 
         <audio
@@ -136,14 +135,13 @@
         ></a-plane>
  -->
 
-      <a-video
-        src="#arVideo"
-        position="0 1.2 0"
-        width="1"
-        height="0.56"
-        material="shader: flat; side: double;"
-
-      ></a-video>
+       <a-video
+          src="#arVideo"
+          position="0 1.2 -0.05"
+          width="1"
+          height="0.56"
+          material="shader: flat; side: double;"
+        ></a-video>
 
        <a-text
           value="Ramadan\n2026"
@@ -203,7 +201,7 @@
           animation="property: rotation;
                      from: 0 -90 0;
                      to: 0 90 0;
-                     dur: 10000;
+                     dur: 8000;
                      loop: true;
                      easing: linear"
         ></a-gltf-model>
