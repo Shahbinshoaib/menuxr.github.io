@@ -6,43 +6,35 @@
   </head>
 
 
-  <script>
- const video = document.querySelector("#arVideo");
+<script>
+  
+  const video = document.querySelector("#arVideo");
   const target = document.querySelector("#target");
 
-  target.addEventListener("targetFound", () => {
-    video.play().catch(err => console.log("Play blocked:", err));
+  // 🔑 force WebGL texture refresh
+  const forceUpdate = () => {
+    video.currentTime = video.currentTime + 0.001;
+  };
+
+  document.querySelector("#arVideo").addEventListener("loadeddata", () => {
+    document.querySelector("#arVideo").play().then(v => v.pause());
+  });
+
+  target.addEventListener("targetFound", async () => {
+    try {
+      await video.play();
+      forceUpdate();
+    } catch (e) {
+      console.log("Video play blocked:", e);
+    }
   });
 
   target.addEventListener("targetLost", () => {
     video.pause();
     video.currentTime = 0;
   });
-
-
-  // startOverlay.addEventListener('click', async () => {
-  //   try {
-  //     await audio.play(); // 🔓 unlocks audio
-  //   } catch (e) {
-  //     console.log('Audio blocked:', e);
-  //   }
-
-  //   startOverlay.style.display = 'none';
-  // });
-
-  // target.addEventListener('targetFound', () => {
-  //   audio.play();
-  // });
-
-  // target.addEventListener('targetLost', () => {
-  //   audio.pause();
-  // });
-
-
-
-
-
 </script>
+
 
   <body>
 
@@ -140,8 +132,10 @@
           position="0 1.2 -0.05"
           width="1"
           height="0.56"
-          material="shader: flat; side: double;"
+          material="shader: flat"
+          preload="auto"
         ></a-video>
+
 
        <a-text
           value="Ramadan\n2026"
