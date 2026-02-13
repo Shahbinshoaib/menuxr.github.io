@@ -59,12 +59,13 @@
       >
 
 
-        <a-plane
-          src="#bgImage"
+        <a-entity
+          geometry="primitive: plane; width: 1.3; height: 1.9"
+          material="src: #bgImage; transparent: true"
           position="0 0.35 -0.2"
-          scale="1.3 1.9 1"
-          rotation="0 0 0"
-        ></a-plane>
+          rounded="radius: 0.15"
+        ></a-entity>
+
 
          <a-plane
           src="#savethedateImage"
